@@ -27,15 +27,15 @@ rfm_df = df.groupby('CustomerID').agg({
 
 print(rfm_df.head())
 
+# Now after the feature engineering, we can tidy up the new df and rename columns to better names.
+rfm_df = rfm_df.rename(columns={
+    'TotalPrice': 'Monetary Spend',
+    'InvoiceNo': 'Frequency',
+    'InvoiceDate': 'Recency'
+})
 
-
-
-
-
-
-
-
-
+snapshot_date = df['InvoiceDate'].max()
+rfm_df['Recency'] = (snapshot_date - rfm_df['Recency']).dt.days
 
 
 # Having used the commands above to see the breakdown of the data, it can be seen that there is a large variance between the mean unit price (4.611) and the mean customer ID (15287).
@@ -43,3 +43,4 @@ print(rfm_df.head())
 # value. It would make it very difficult to read the smaller value. Therefore, scaling is needed to align the 2 values to allow for correct analysis
 
 # First we instantiate the scaler
+scaler = StandardScaler()
