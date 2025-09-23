@@ -16,6 +16,26 @@ df = df.dropna(subset=['CustomerID'])
 # This one removes all the rows that show Quantity as a negative
 df[df['Quantity'] > 0]
 
+# Feature Engineering - We can use a technique called RFM analysis. this is recency, frequency and monitary
+df['TotalPrice'] = df['Quantity'] * df['UnitPrice']
+
+rfm_df = df.groupby('CustomerID').agg({
+    'TotalPrice': 'sum',
+    'InvoiceNo': 'nunique',
+    'InvoiceDate': 'max'
+})
+
+print(rfm_df.head())
+
+
+
+
+
+
+
+
+
+
 
 
 # Having used the commands above to see the breakdown of the data, it can be seen that there is a large variance between the mean unit price (4.611) and the mean customer ID (15287).
