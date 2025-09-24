@@ -59,3 +59,17 @@ rfm_df_scaled = pd.DataFrame(data=rfm_scaled, columns=['Recency', 'Frequency', '
 
 # To find out the optimum number of clusters, we can run a number of different methods including the elbow method. This is where the model runs multiple times against each k number
 # We then calculate a number called the inertia which is how tightly packed the clusters are. We then plot this in order to see which is the best k number for our use case.
+
+# create an empty list to store values
+inertia_scores = []
+
+# define the k values to test
+k_values = range(1, 11)
+
+for k in k_values:
+    kmeans = KMeans(n_clusters=k, random_state=42)
+
+# now we fit and append the data into our list
+kmeans_fit = kmeans.fit(rfm_df_scaled)
+
+
