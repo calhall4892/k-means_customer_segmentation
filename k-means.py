@@ -44,3 +44,18 @@ rfm_df['Recency'] = (snapshot_date - rfm_df['Recency']).dt.days
 
 # First we instantiate the scaler
 scaler = StandardScaler()
+
+# .fit() is the learning step. The scaler analyzes your data to learn its properties. For StandardScaler, this means calculating the mean and standard deviation for each column.
+#  It doesn't change the data itself.
+# .transform() is the applying step. It uses the parameters learned during the .fit() step to actually scale the data. You can't transform data that hasn't been fitted first.
+# There is a single method to use both and its .fit_transform()
+rfm_scaled = scaler.fit_transform(rfm_df[['Recency', 'Frequency', 'Monetary Spend']])
+
+# The scaler outputs as a NumPy array rather than dataframe so we convert it back to a df
+rfm_df_scaled = pd.DataFrame(data=rfm_scaled, columns=['Recency', 'Frequency', 'Monetary'])
+
+#-------------------------------------------------------------------------------
+# K-means clustering
+
+# To find out the optimum number of clusters, we can run a number of different methods including the elbow method. This is where the model runs multiple times against each k number
+# We then calculate a number called the inertia which is how tightly packed the clusters are. We then plot this in order to see which is the best k number for our use case.
