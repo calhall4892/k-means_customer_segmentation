@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
 
 df = pd.read_excel(r'C:\Users\Callum\Documents\ML Researcher\k-means_customer\k-means_customer_segmentation\data\Online Retail.xlsx')
 print(df.head())
@@ -68,8 +69,13 @@ k_values = range(1, 11)
 
 for k in k_values:
     kmeans = KMeans(n_clusters=k, random_state=42)
-
 # now we fit and append the data into our list
-kmeans_fit = kmeans.fit(rfm_df_scaled)
+    kmeans_fit = kmeans.fit(rfm_df_scaled)
+    inertia_scores.append(kmeans_fit.inertia_)
 
-
+# Plotting the elbow curve
+plt.plot(k_values, inertia_score)
+plt.title('K numbers against Inertia')
+plt.xlabel('K numbers')
+plt.ylabel('Inertia')
+plt.show()
