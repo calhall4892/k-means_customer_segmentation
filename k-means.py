@@ -74,8 +74,47 @@ for k in k_values:
     inertia_scores.append(kmeans_fit.inertia_)
 
 # Plotting the elbow curve
-plt.plot(k_values, inertia_score)
+plt.plot(k_values, inertia_scores)
 plt.title('K numbers against Inertia')
 plt.xlabel('K numbers')
 plt.ylabel('Inertia')
+plt.show()
+
+# Now we can call the final model with the appropriate kvalues
+
+kmeans_pred = KMeans(n_clusters=4, random_state=42).fit_predict(rfm_df_scaled)
+rfm_df['Cluster'] = kmeans_pred
+
+# Now we group by the cluster
+cluster_summary = rfm_df.groupby('Cluster').mean()
+
+# Make the plotting area larger
+plt.figure(figsize=(15, 5))
+
+# Plot for Recency
+plt.subplot(1, 3, 1)
+sns.barplot(x=cluster_summary.index, y=cluster_summary['Recency'])
+plt.title('Average Recency')
+
+# Plot of monetary
+plt.subplot(1, 3, 2)
+sns.barplot(x=cluster_summary.index, y=cluster_summary['Monetary Spend'])
+plt.title('Average Monetary Spend')
+
+# Plot for Frequency
+plt.subplot(1, 3, 3)
+sns.barplot(x=cluster_summary.index, y=cluster_summary['Frequency'])
+plt.title('Average Frequency')
+
+plt.tight_layout
+plt.show()
+
+from mpl_toolkits.mplot3d import Axes3D
+fig = plt.figure(figsize=(10, 8))
+ax = fig.add_subplot(111, projection='3d')
+
+ax.scatter(x=rfm_df['Recency'], y=rfm_df['Frequency'], z=rfm_df['Monetary Spend'], c=rfm_df['Cluster'])
+ax.set_xlabel('Recency')
+ax.set_ylabel('Frequency')
+ax.set_zlabel('Monetary')
 plt.show()
