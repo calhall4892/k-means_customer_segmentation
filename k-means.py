@@ -113,7 +113,7 @@ from mpl_toolkits.mplot3d import Axes3D
 fig = plt.figure(figsize=(10, 8))
 ax = fig.add_subplot(111, projection='3d')
 
-ax.scatter(x=rfm_df['Recency'], y=rfm_df['Frequency'], z=rfm_df['Monetary Spend'], c=rfm_df['Cluster'])
+ax.scatter(rfm_df['Recency'], rfm_df['Frequency'], rfm_df['Monetary Spend'], c=rfm_df['Cluster'])
 ax.set_xlabel('Recency')
 ax.set_ylabel('Frequency')
 ax.set_zlabel('Monetary')
