@@ -6,4 +6,4 @@ A model for customer segmentation using K-Means Clustering algorith.
 To create an unsupervised machine learning model using the k-means algorithm in order to find clusters in customer data.
 
 
-to
+to.
